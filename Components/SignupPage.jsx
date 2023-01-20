@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {View, TouchableOpacity} from 'react-native';
 import {Button, Text, TextInput} from 'react-native-paper';
-import {AsyncStorage} from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const SignupPage = props => {
   const [name, setName] = useState('');

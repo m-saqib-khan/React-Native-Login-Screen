@@ -7,38 +7,39 @@ import {
 } from 'react-native';
 // import LinearGradient from 'react-native-linear-gradient';
 import {Button, Text, TextInput} from 'react-native-paper';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const LoginPage = props => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
-    const handleLogin = () =>{
-      fetch('http://localhost:3000/signup', {
-        method: 'POST',
-        // Adding headers to the request
-        headers: {
-          'Content-type': 'application/json',
-        },
-  
-        // Adding body or contents to send
-        body: JSON.stringify({
-          email: email,
-          password: password,
-        }),
-      }) // Converting to JSON
-        .then(response => response.json())
-  
-        // Displaying results to console
-        .then(async data => {
-          try {
-            console.log(data);
-            await AsyncStorage.setItem('token', data.token);
-            props.navigation.replace("Home")
-          } catch (error) {
-            console.log(error, 'error');
-          }
-        });
-    }
+  const handleLogin = () => {
+    fetch('http://localhost:3000/login', {
+      method: 'POST',
+      // Adding headers to the request
+      headers: {
+        'Content-type': 'application/json',
+      },
+
+      // Adding body or contents to send
+      body: JSON.stringify({
+        email: email,
+        password: password,
+      }),
+    }) // Converting to JSON
+      .then(response => response.json())
+
+      // Displaying results to console
+      .then(async data => {
+        try {
+          console.log(data);
+          await AsyncStorage.setItem('token', data.token);
+          props.navigation.replace('Home');
+        } catch (error) {
+          console.log(error, 'error');
+        }
+      });
+  };
   return (
     <>
       <View
@@ -92,15 +93,15 @@ const LoginPage = props => {
         </Text>
 
         <TextInput
-            value={email}
-            onChangeText={email => setEmail(email)}
+          value={email}
+          onChangeText={email => setEmail(email)}
           label="Username"
           mode="outlined"
           style={{marginTop: 18, marginLeft: 18, marginRight: 18}}
         />
         <TextInput
-            value={password}
-            onChangeText={password => setPassword(password)}
+          value={password}
+          onChangeText={password => setPassword(password)}
           label="Password"
           mode="outlined"
           style={{marginTop: 18, marginLeft: 18, marginRight: 18}}
