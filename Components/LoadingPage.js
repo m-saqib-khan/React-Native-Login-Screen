@@ -1,11 +1,18 @@
-import React, {useState} from 'react';
-import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import React, {useEffect} from 'react';
 
 import {ActivityIndicator} from 'react-native';
-import {Button, Text, TextInput} from 'react-native-paper';
+import {Text} from 'react-native-paper';
 
 const LoadingPage = () => {
+  useEffect(async () => {
+    let token = await AsyncStorage.get('token');
+    if (token) {
+      props.navigation.replace('Home');
+    } else {
+      props.navigation.replace('Login');
+    }
+  }, []);
+
   return (
     <>
       <Text>

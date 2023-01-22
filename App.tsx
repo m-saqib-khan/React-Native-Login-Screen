@@ -7,12 +7,14 @@ import {StatusBar} from 'react-native';
 // import {AsyncStorage} from 'react-native';
 import HomePage from './Components/HomePage';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import LoadingPage from './Components/LoadingPage';
 
 function App() {
   const [isToken, setIsToken] = useState(false);
   const getToken = async () => {
     try {
       const token = await AsyncStorage.getItem('token');
+      console.log(token, 'token');
       if (!token || token === '') {
         setIsToken(false);
         console.log('error');
@@ -31,8 +33,13 @@ function App() {
   return (
     <>
       <NavigationContainer>
-        <Stack.Navigator>
-          {isToken ? (
+        <Stack.Navigator
+          screenOptions={{
+            headerShown: false,
+          }}>
+          {!isToken ? (
+            <Stack.Screen name="Loading" component={LoadingPage} />
+          ) : isToken ? (
             <Stack.Screen name="Home" component={HomePage} />
           ) : (
             <>

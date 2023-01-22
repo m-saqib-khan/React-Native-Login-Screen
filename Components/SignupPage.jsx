@@ -28,10 +28,11 @@ const SignupPage = props => {
       .then(async data => {
         try {
           console.log(data);
-          await AsyncStorage.setItem('token', data.token);
+          let token = await AsyncStorage.setItem('token', data.token);
+          console.log(token,"ASddsa")
           props.navigation.replace("Home")
         } catch (error) {
-          console.log(error, 'error');
+          console.log(error, 'errasor');
         }
       });
   };
