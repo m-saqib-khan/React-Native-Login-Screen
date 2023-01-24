@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   StyleSheet,
   View,
@@ -7,38 +7,35 @@ import {
 } from 'react-native';
 // import LinearGradient from 'react-native-linear-gradient';
 import {Button, Text, TextInput} from 'react-native-paper';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage, {
+  useAsyncStorage,
+} from '@react-native-async-storage/async-storage';
+import axios from 'axios';
+import LoadingPage from './LoadingPage';
+import { getRequest, postRequest } from '../global/services.js';
+import { SIGNIN } from '../global/Constant.js';
 
 const LoginPage = props => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
-  const handleLogin = () => {
-    fetch('https://fa84-182-189-124-114.ngrok.io/login', {
-      method: 'POST',
-      // Adding headers to the request
-      headers: {
-        'Content-type': 'application/json',
-      },
-
-      // Adding body or contents to send
-      body: JSON.stringify({
-        email: email,
-        password: password,
-      }),
-    }) // Converting to JSON
-      .then(response => response.json())
-
-      // Displaying results to console
-      .then(async data => {
-        try {
-          console.log(data);
-          await AsyncStorage.setItem('token', data.token);
-          props.navigation.replace('Home');
-        } catch (error) {
-          console.log(error, 'error');
-        }
-      });
+  const handleLogin = async () => {
+    const payload = {
+      email: email,
+      password: password,
+    };
+    try {
+  
+      const res =await postRequest(SIGNIN,payload)
+      console.log(res, 'response');
+      if (res) {
+        await AsyncStorage.setItem('token', res.data.token);
+        props.navigation.replace('Home');
+      } else {
+        console.log('asdasd error ');
+      }
+    } catch (error) {
+      console.log(error, 'eroorr');
+    }
   };
   return (
     <>
@@ -52,10 +49,10 @@ const LoginPage = props => {
           alignItems: 'center',
         }}>
         {/* <LinearGradient
-          start={{x: 0.0, y: 0.25}}
-          end={{x: 0.5, y: 1.0}}
-          locations={[0, 0.5, 0.6]}
-          colors={['#4c669f', '#3b5998', '#192f6a']}> */}
+        start={{x: 0.0, y: 0.25}}
+        end={{x: 0.5, y: 1.0}}
+        locations={[0, 0.5, 0.6]}
+        colors={['#4c669f', '#3b5998', '#192f6a']}> */}
         <Text
           style={{
             textAlign: 'center',
@@ -67,6 +64,7 @@ const LoginPage = props => {
         </Text>
         {/* </LinearGradient> */}
       </View>
+
       <View
         style={{
           //   flex: 1,
