@@ -8,7 +8,6 @@ import {StatusBar} from 'react-native';
 import HomePage from './Components/HomePage';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import LoadingPage from './Components/LoadingPage';
-
 function App() {
   const [isToken, setIsToken] = useState(false);
   const getToken = async () => {
@@ -37,16 +36,19 @@ function App() {
           screenOptions={{
             headerShown: false,
           }}>
-          {!isToken ? (
-            <Stack.Screen name="Loading" component={LoadingPage} />
-          ) : isToken ? (
-            <Stack.Screen name="Home" component={HomePage} />
-          ) : (
-            <>
-              <Stack.Screen name="Signup" component={SignupPage} />
+            <Stack.Screen name="Signup" component={SignupPage} />
               <Stack.Screen name="Login" component={LoginPage} />
-            </>
-          )}
+              <Stack.Screen name="Home" component={HomePage} />
+          
+          {/* { isToken === false ? (
+            <>
+            <Stack.Screen name="Signup" component={SignupPage} />
+            <Stack.Screen name="Login" component={LoginPage} />
+          </>
+            ) : (
+              <Stack.Screen name="Home" component={HomePage} />
+              
+              )} */}
         </Stack.Navigator>
       </NavigationContainer>
     </>
