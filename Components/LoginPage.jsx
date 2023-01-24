@@ -14,7 +14,7 @@ const LoginPage = props => {
   const [password, setPassword] = useState('');
 
   const handleLogin = () => {
-    fetch('http://localhost:3000/login', {
+    fetch('https://fa84-182-189-124-114.ngrok.io/login', {
       method: 'POST',
       // Adding headers to the request
       headers: {

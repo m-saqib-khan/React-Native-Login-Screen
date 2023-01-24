@@ -4,7 +4,6 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import LoginPage from './Components/LoginPage';
 import SignupPage from './Components/SignupPage';
 import {StatusBar} from 'react-native';
-// import {AsyncStorage} from 'react-native';
 import HomePage from './Components/HomePage';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -14,8 +13,8 @@ function App() {
     try {
       const token = await AsyncStorage.getItem('token');
       if (!token || token === '') {
-        setIsToken(false);
-        console.log('error');
+         setIsToken(false);
+         return 
       }
       setIsToken(true);
     } catch (error) {
@@ -28,6 +27,7 @@ function App() {
   }, []);
 
   const Stack = createNativeStackNavigator();
+  console.log("token",isToken)
   return (
     <>
       <NavigationContainer>

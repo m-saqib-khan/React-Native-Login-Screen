@@ -8,7 +8,7 @@ const SignupPage = props => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const handleSignUp = () => {
-    fetch('http://localhost:3000/signup', {
+    fetch('https://fa84-182-189-124-114.ngrok.io/signup', {
       method: 'POST',
       // Adding headers to the request
       headers: {
