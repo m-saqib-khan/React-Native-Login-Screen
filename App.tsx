@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import LoginPage from './Components/LoginPage';
-import SignupPage from './Components/SignupPage';
+import LoginPage from './Screens/LoginPage';
+import SignupPage from './Screens/SignupPage';
 import {StatusBar} from 'react-native';
-import HomePage from './Components/HomePage';
+import HomePage from './Screens/HomePage';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import LoadingPage from './Components/LoadingPage';
+import LoadingPage from './Screens/LoadingPage';
 function App() {
   const [isToken, setIsToken] = useState(false);
   const getToken = async () => {
