@@ -3,10 +3,10 @@ import {
   StyleSheet,
   View,
   TouchableOpacity,
-  KeyboardAvoidingView,
+  KeyboardAvoidingView,Button, Text, TextInput,Alert
 } from 'react-native';
 // import LinearGradient from 'react-native-linear-gradient';
-import {Button, Text, TextInput} from 'react-native-paper';
+// import {Button, Text, TextInput} from 'react-native-paper';
 import AsyncStorage, {
   useAsyncStorage,
 } from '@react-native-async-storage/async-storage';
@@ -24,69 +24,43 @@ const LoginPage = props => {
       password: password,
     };
     try {
-  
       const res =await postRequest(SIGNIN,payload)
       console.log(res, 'response');
-      if (res) {
-        await AsyncStorage.setItem('token', res.data.token);
+      if (res.succes) {
+        // await AsyncStorage.setItem('token', res.data.token);
+        await AsyncStorage.setItem('id', res.id);
         props.navigation.replace('Home');
       } else {
         console.log('asdasd error ');
+        throw (res.error)
       }
     } catch (error) {
       console.log(error, 'eroorr');
+      Alert.alert("Error",error)
+      setEmail("")
+      setPassword("")
     }
   };
   return (
     <>
       <View
-        style={{
-          backgroundColor: 'rgba(101, 21, 240, 0.9)',
-          height: 150,
-          borderBottomLeftRadius: 15,
-          borderBottomRightRadius: 15,
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}>
+        style={styles.headerContainer}>
         {/* <LinearGradient
         start={{x: 0.0, y: 0.25}}
         end={{x: 0.5, y: 1.0}}
         locations={[0, 0.5, 0.6]}
         colors={['#4c669f', '#3b5998', '#192f6a']}> */}
         <Text
-          style={{
-            textAlign: 'center',
-            color: 'white',
-            fontSize: 26,
-            fontWeight: '800',
-          }}>
+          style={styles.headerText}>
           LOGIN SCREEN
         </Text>
         {/* </LinearGradient> */}
       </View>
 
       <View
-        style={{
-          //   flex: 1,
-          backgroundColor: 'white',
-          borderWidth: 1,
-          borderColor: 'transparent',
-          borderRadius: 15,
-          marginTop: -20,
-          marginLeft: 10,
-          marginRight: 10,
-          height: 385,
-          gap: 15,
-        }}>
+        style={styles.mainContainer}>
         <Text
-          style={{
-            marginTop: 18,
-            marginLeft: 18,
-            marginRight: 18,
-            fontSize: 24,
-            color: 'rgba(98, 57, 169, 0.9)',
-            fontWeight: '700',
-          }}>
+          style={styles.mainContainerText}>
           LOGIN
         </Text>
 
@@ -95,26 +69,25 @@ const LoginPage = props => {
           onChangeText={email => setEmail(email)}
           label="Username"
           mode="outlined"
-          style={{marginTop: 18, marginLeft: 18, marginRight: 18}}
+          placeholder='Useremail'
+          style={styles.inputFieldsAndButton}
         />
         <TextInput
           value={password}
           onChangeText={password => setPassword(password)}
           label="Password"
           mode="outlined"
-          style={{marginTop: 18, marginLeft: 18, marginRight: 18}}
+          placeholder='Password'
+          secureTextEntry={true}
+          style={styles.inputFieldsAndButton}
         />
-        <TouchableOpacity>
-          <Button
-            mode="contained"
-            style={{marginTop: 18, marginLeft: 18, marginRight: 18}}
+        <TouchableOpacity style={styles.loginButtonContainer}
             onPress={handleLogin}>
-            LOGIN
-          </Button>
+            <Text style={styles.loginButton}>LOGIN</Text>
         </TouchableOpacity>
         <TouchableOpacity>
           <Text
-            style={{marginTop: 18, marginLeft: 18, marginRight: 18}}
+            style={styles.askQues}
             onPress={() => props.navigation.navigate('Signup')}>
             Don't have an Account? Sign Up
           </Text>
@@ -125,3 +98,69 @@ const LoginPage = props => {
 };
 
 export default LoginPage;
+
+const styles = StyleSheet.create({
+  headerContainer:{
+    backgroundColor: 'rgba(101, 21, 240, 0.9)',
+    height: 150,
+    borderBottomLeftRadius: 15,
+    borderBottomRightRadius: 15,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  headerText:{
+    textAlign: 'center',
+    color: 'white',
+    fontSize: 26,
+    fontWeight: '800',
+  },
+  mainContainer:{
+    //   flex: 1,
+    backgroundColor: 'white',
+    borderWidth: 1,
+    borderColor: 'transparent',
+    borderRadius: 15,
+    marginTop: -20,
+    marginLeft: 10,
+    marginRight: 10,
+    height: 360,
+    gap: 15,
+  },
+  mainContainerText:{
+    marginTop: 18,
+    marginLeft: 18,
+    marginRight: 18,
+    fontSize: 24,
+    color: 'rgba(98, 57, 169, 0.9)',
+    fontWeight: '700',
+  },
+  inputFieldsAndButton:{
+    marginTop: 18,
+     marginLeft: 18,
+      marginRight: 18,
+    borderWidth:1,
+    borderRadius:10,
+    padding:10,
+  },
+  loginButtonContainer:{
+    alignSelf:"center",
+    width:200,
+    borderWidth:0.5,
+    padding:10,
+    borderRadius:10,
+    backgroundColor:"rgba(20, 17, 120,0.1)"
+
+  },
+  loginButton:{
+    textAlign:"center",
+    fontSize:20,
+    fontWeight:500,
+    borderWidth:0,
+    color:"rgba(98, 57, 169, 0.9)"
+  },
+  askQues:{
+    marginTop:5,
+    marginLeft:25,
+    marginRight:18
+  }
+})
