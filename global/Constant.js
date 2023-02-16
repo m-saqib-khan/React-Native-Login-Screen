@@ -1,4 +1,4 @@
-export const BASE_URL = 'https://8767-119-157-89-182.ngrok.io';
+export const BASE_URL = 'https://cc72-182-189-125-103.ngrok.io';
 
 // export const BASE_URL = 'http://localhost:3000';
 

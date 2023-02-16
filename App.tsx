@@ -36,14 +36,14 @@ function App() {
     <StripeProvider
       publishableKey = {Config.PUBLIC_KEY}
       urlScheme="your-url-scheme" // required for 3D Secure and bank redirects
-      // merchantIdentifier="merchant.com.payment_integration" // required for Apple Pay
+      merchantIdentifier="merchant.com.bunnyrents.paymentdemo" // required for Apple Pay
     >
       <NavigationContainer>
         <Stack.Navigator
           screenOptions={{
             headerShown: false,
           }}>
-          <Stack.Screen name="Login" component={LoginPage} />
+          {/* <Stack.Screen name="Login" component={LoginPage} /> */}
           <Stack.Screen name="Home" component={HomePage} />
           <Stack.Screen name="AllOrder" component={AllUserOrder}/>
 
